@@ -9,22 +9,19 @@ import {
     Button,
     TouchableOpacity
 } from 'react-native';
-import {Actions} from "react-native-router-flux";
+
 import {loginUser, signupUser} from '../actions';
 
-var Login = React.createClass({
-  onSignIn: function(){
-    var {email, password} = this.state;
-    var {dispatch} = this.props;
-    dispatch(loginUser(email, password));
-  },
+var Signup = React.createClass({
   onSignUp: function(){
   debugger
-      var {email, password} = this.state;
+      var {email, password, phone} = this.state;
       var {dispatch} = this.props;
-      dispatch(signupUser(email, password));
+      dispatch(signupUser(email, password, phone));
     },
+
   render(){
+
      return (
        <View style={styles.container}>
             <View style={styles.titleContainer}>
@@ -39,12 +36,13 @@ var Login = React.createClass({
                   <TextInput onChangeText={password => this.setState({password})} name="password" placeholder="Password" style={styles.textInput}></TextInput>
                 </View>
 
+                <View style={styles.field}>
+                  <TextInput onChangeText={phone => this.setState({phone})} name="phone" placeholder="Phone" style={styles.textInput}></TextInput>
+                </View>
+
                 <View style={styles.buttonContainer}>
-                  <TouchableOpacity onPress={this.onSignIn}>
-                    <Text style={styles.button}>Sign In</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                      <Text style={styles.button} onPress={Actions.signup}>Sign Up</Text>
+                  <TouchableOpacity onPress={this.onSignUp}>
+                    <Text style={styles.button}>Sign Up</Text>
                   </TouchableOpacity>
                 </View>
             </View>
@@ -99,11 +97,14 @@ var validate = (formProps) => {
   if(!formProps.email){
     errors.password = "Password is missing"
   }
+  if(!formProps.phone){
+    errors.phone = "Phone is missing"
+  }
   return errors;
 }
 
 module.exports = reduxForm({
-    form: 'Login',
-    fields: ['email', 'password'],
+    form: 'Signup',
+    fields: ['email', 'password','phone'],
     validate: validate
-}, null, null)(Login);
+}, null, null)(Signup);

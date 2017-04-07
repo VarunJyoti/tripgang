@@ -3,26 +3,57 @@ import {connect} from 'react-redux';
 import {
     StyleSheet,
     Text,
-    Views
+    View
 } from 'react-native';
-
+import {
+  Scene,
+  Reducer,
+  Router,
+  Switch,
+  Modal,
+  Actions,
+  ActionConst
+} from 'react-native-router-flux';
 import Login from './Login';
 import Main from './Main';
+import Signup from './Signup';
+
+const reducerCreate = params => {
+  const defaultReducer = new Reducer(params);
+  return (state,action) => {
+    return defaultReducer(state,action);
+  }
+};
+
+const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) => {
+  debugger;
+  const style = {
+    flex: 1,
+    backgroundColor: '#fff',
+    shadowColor: null,
+    shadowOffset: null,
+    shadowOpacity: null,
+    shadowRadius: null,
+  };
+  if (computedProps.isActive) {
+    style.marginTop = computedProps.hideNavBar ? 0 : 64;
+    style.marginBottom = computedProps.hideTabBar ? 0 : 50;
+  }
+  return style;
+};
 
 var App = React.createClass({
 
   render(){
-  debugger
-  if(this.props.user_id){
-     return (
-        <Main/>
-     );
-  }else{
     return (
-       <Login/>
-     );
-  }
-
+      <Router>
+        <Scene key='root' getSceneStyle={getSceneStyle}>
+          <Scene key='login' hideNavbar component={Login} initial={!this.props.user_id}/>
+          <Scene key='main'  component={Main} initial={this.props.user_id}/>
+          <Scene key="signup" component={Signup} title="Create your Account"/>
+        </Scene>
+      </Router>
+    );
   }
 });
 
