@@ -11,9 +11,9 @@ exports.loginUser = (email, password) => {
    }
 }
 
-exports.signupUser = (email, password) => {
+exports.signupUser = (email, password,phone) => {
    return function(dispatch){
-    return axios.post("http://10.0.2.2:3000/v1/signup", {email, password}).then((response) => {
+    return axios.post("http://127.0.0.1:3000/v1/signup", {email, password,phone}).then((response) => {
               var {user_id, token} = response.data;
               dispatch(authUser(user_id));
           }).catch((error) => { console.log(error); })

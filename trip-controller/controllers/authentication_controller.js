@@ -11,7 +11,8 @@ function tokenForUser(user){
 exports.signup = function(req, res, next){
   var email = req.body.email;
   var password = req.body.password;
-  if(!email || !password){
+  var phone = req.body.phone;
+  if(!email || !password || !phone){
     return res.status(400).json({error: "You must provide email and password"});
   }
   User.findOne({email: email}, function(err, existingUser){
@@ -24,7 +25,8 @@ exports.signup = function(req, res, next){
 
     var user = new User({
       email: email,
-      password: password
+      password: password,
+      phone: phone
     });
     user.save(function(err){
        if(err){ return next(err); }

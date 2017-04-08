@@ -10,7 +10,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import {loginUser, signupUser} from '../actions';
+import {signupUser} from '../actions';
+import {Actions} from "react-native-router-flux";
 
 var Signup = React.createClass({
   onSignUp: function(){
@@ -41,6 +42,9 @@ var Signup = React.createClass({
                 </View>
 
                 <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={Actions.login}>
+                  <Text style={styles.button}>Back</Text>
+                </TouchableOpacity>
                   <TouchableOpacity onPress={this.onSignUp}>
                     <Text style={styles.button}>Sign Up</Text>
                   </TouchableOpacity>
